@@ -2,8 +2,9 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Entities;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         public DbSet<Product> Products { get; set; }
 
