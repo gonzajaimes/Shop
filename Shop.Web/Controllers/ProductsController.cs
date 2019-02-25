@@ -12,7 +12,6 @@ namespace Shop.Web.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
-
         private readonly IUserHelper userHelper;
 
         public ProductsController(IProductRepository productRepository, IUserHelper userHelper)
@@ -58,7 +57,7 @@ namespace Shop.Web.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Pending to change to: this.User.Identity.Name
-                product.User = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+                product.User = await this.userHelper.GetUserByEmailAsync("gonzajaimes@hotmail.com");
                 await this.productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +92,7 @@ namespace Shop.Web.Controllers
                 try
                 {
                     // TODO: Pending to change to: this.User.Identity.Name
-                    product.User = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+                    product.User = await this.userHelper.GetUserByEmailAsync("gonzajaimes@hotmail.com");
                     await this.productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -140,5 +139,6 @@ namespace Shop.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
     }
+
 
 }
