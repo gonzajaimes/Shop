@@ -26,6 +26,7 @@ namespace Shop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //password validation requirements
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -45,10 +46,16 @@ namespace Shop.Web
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            //Inyectar el SeedDb
             services.AddTransient<SeedDb>();
 
+            //Inject the Prouct repository 
             services.AddScoped<IProductRepository, ProductRepository>();
 
+            //Inject the Countries repository 
+            services.AddScoped<ICountryRepository, CountryRepository>();
+
+            //Inject user validation
             services.AddScoped<IUserHelper, UserHelper>();
 
             services.Configure<CookiePolicyOptions>(options =>
