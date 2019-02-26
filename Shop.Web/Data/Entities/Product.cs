@@ -31,6 +31,22 @@ namespace Shop.Web.Data.Entities
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public double Stock { get; set; }
 
-        public User User { get; set; }  
+        public User User { get; set; }
+
+        //Property used so that mobile phones understand the path where the image is.
+        //get only properties won't get mapped on the DB
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"https://shopchalo.azurewebsites.net{this.ImageUrl.Substring(1)}";
+            }
+        }
+
     }
 }
