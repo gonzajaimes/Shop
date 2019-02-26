@@ -118,25 +118,61 @@ namespace Shop.Web.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            var view = this.ToProducViewModel(product);
+            return View(view);
         }
+
+        private ProductViewModel ToProducViewModel(Product product)
+        {
+            return new ProductViewModel
+            {
+                Id = product.Id,
+                ImageUrl = product.ImageUrl,
+                IsAvailabe = product.IsAvailabe,
+                LastPurchase = product.LastPurchase,
+                LastSale = product.LastSale,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock,
+                User = product.User
+            };
+        }
+
+
 
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Product product)
+        public async Task<IActionResult> Edit(ProductViewModel view)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var path = view.ImageUrl;
+
+                    if (view.ImageFile != null && view.ImageFile.Length > 0)
+                    {
+                        path = Path.Combine(Directory.GetCurrentDirectory(),
+                            "wwwroot\\images\\Products",
+                            view.ImageFile.FileName);
+
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await view.ImageFile.CopyToAsync(stream);
+                        }
+
+                        path = $"~/images/Products/{view.ImageFile.FileName}";
+                    }
+
+                    var product = this.ToProduct(view, path);
                     // TODO: Pending to change to: this.User.Identity.Name
                     product.User = await this.userHelper.GetUserByEmailAsync("gonzajaimes@hotmail.com");
                     await this.productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await this.productRepository.ExistAsync(product.Id))
+                    if (!await this.productRepository.ExistAsync(view.Id))
                     {
                         return NotFound();
                     }
@@ -148,7 +184,7 @@ namespace Shop.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(product);
+            return View(view);
         }
 
         // GET: Products/Delete/5
