@@ -5,9 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190222201524_InitialDb.cs" />
+    <Compile Remove="Migrations\20190222201524_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\20190222223001_ModifyProducts.cs" />
+    <Compile Remove="Migrations\20190222223001_ModifyProducts.Designer.cs" />
+    <Compile Remove="Migrations\20190223134712_Users.cs" />
+    <Compile Remove="Migrations\20190223134712_Users.Designer.cs" />
+    <Compile Remove="Migrations\20190225153039_Countries.cs" />
+    <Compile Remove="Migrations\20190225153039_Countries.Designer.cs" />
+    <Compile Remove="Migrations\20190226005015_InitialPgDb.cs" />
+    <Compile Remove="Migrations\20190226005015_InitialPgDb.Designer.cs" />
+    <Compile Remove="Migrations\20190226012446_User.cs" />
+    <Compile Remove="Migrations\20190226012446_User.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

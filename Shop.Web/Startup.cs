@@ -26,7 +26,13 @@ namespace Shop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //password validation requirements
+           // password validation requirements
+          
+
+
+            services.AddDbContext<DataContext>(options =>
+                       options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -37,14 +43,12 @@ namespace Shop.Web
                 cfg.Password.RequireUppercase = false;
                 cfg.Password.RequiredLength = 6;
             })
-        .AddEntityFrameworkStores<DataContext>();
+             .AddEntityFrameworkStores<DataContext>();
 
-
-
-            services.AddDbContext<DataContext>(cfg =>
-            {
-                cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
-            });
+            //services.AddDbContext<DataContext>(cfg =>
+            //{
+            //    cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+            //});
 
             //Inyectar el SeedDb
             services.AddTransient<SeedDb>();
