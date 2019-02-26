@@ -5,6 +5,7 @@ namespace Shop.UIForms.ViewModels
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Xamarin.Forms;
+    using Views;
 
     public class LoginViewModel
     {
@@ -50,7 +51,11 @@ namespace Shop.UIForms.ViewModels
                 return;
             }
 
-            await Application.Current.MainPage.DisplayAlert("Ok", "Fuck yeah!!!", "Accept");
+            MainViewModel.GetInstance().Products = new ProductsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new ProductsPage());
+
+
+            
         } 
         #endregion
     }
