@@ -2,6 +2,7 @@
 {
     using Views;
     using Xamarin.Forms;
+    using ViewModels;
 
 
     public partial class App : Application
@@ -11,6 +12,7 @@
         {
             InitializeComponent();
 
+            MainViewModel.GetInstance().Login = new LoginViewModel();
             this.MainPage = new NavigationPage(new LoginPage());
         }
         #endregion

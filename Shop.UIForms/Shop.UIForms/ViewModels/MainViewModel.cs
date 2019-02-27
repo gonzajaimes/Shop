@@ -13,7 +13,7 @@
         public MainViewModel()
         {
             instance = this;
-            this.Login = new LoginViewModel();
+            
         }
         #endregion
 
