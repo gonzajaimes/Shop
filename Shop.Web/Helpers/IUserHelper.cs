@@ -9,11 +9,17 @@
     {
         Task<User> GetUserByEmailAsync(string email);
 
+        Task<User> GetUserByNameAsync(string name);
+
         Task<IdentityResult> AddUserAsync(User user, string password);
+
+        Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
 
         Task<SignInResult> LoginAsync(LoginViewModel model);
 
         Task LogoutAsync();
+
+        Task<IdentityResult> UpdateUserAsync(User user);
 
     }
 

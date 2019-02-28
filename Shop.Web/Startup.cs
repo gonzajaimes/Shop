@@ -43,7 +43,8 @@ namespace Shop.Web
                 cfg.Password.RequireUppercase = false;
                 cfg.Password.RequiredLength = 6;
             })
-             .AddEntityFrameworkStores<DataContext>();
+             .AddEntityFrameworkStores<DataContext>()
+             .AddDefaultTokenProviders();
 
             //services.AddDbContext<DataContext>(cfg =>
             //{
