@@ -13,6 +13,8 @@ namespace Shop.Web
     using Data;
     using Data.Entities;
     using Helpers;
+    using Microsoft.IdentityModel.Tokens;
+    using System.Text;
 
     public class Startup
     {
@@ -26,9 +28,24 @@ namespace Shop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           // password validation requirements
-          
+            // password validation requirements
 
+            services.AddAuthentication()
+                    .AddCookie()
+                    .AddJwtBearer(cfg =>
+                    {
+                        cfg.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidIssuer = this.Configuration["Tokens:Issuer"],
+                            ValidAudience = this.Configuration["Tokens:Audience"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                        };
+                    });
+
+
+
+
+            //inject data context
 
             services.AddDbContext<DataContext>(options =>
                        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));

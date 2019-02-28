@@ -21,6 +21,7 @@
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
+        Task<SignInResult> CheckPasswordSignInAsync(User user, string password, bool v);
     }
 
 }

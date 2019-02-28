@@ -59,6 +59,10 @@
 
         }
 
+        public async Task<SignInResult> CheckPasswordSignInAsync(User user, string password, bool v)
+        {
+            return await this.signInManager.CheckPasswordSignInAsync(user, password, v);
+        }
     }
 
 }
