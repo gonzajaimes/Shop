@@ -9,8 +9,6 @@
     {
         Task<User> GetUserByEmailAsync(string email);
 
-        Task<User> GetUserByNameAsync(string name);
-
         Task<IdentityResult> AddUserAsync(User user, string password);
 
         Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
@@ -21,7 +19,7 @@
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
-        Task<SignInResult> CheckPasswordSignInAsync(User user, string password, bool v);
+        Task<SignInResult> ValidatePasswordAsync(User user, string password);
     }
 
 }

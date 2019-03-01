@@ -7,20 +7,22 @@ namespace Shop.Web.Controllers
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-    using Helpers;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
+    using Data.Entities;
+    using Helpers;
     using Models;
-    using Shop.Web.Data.Entities;
 
     public class AccountController : Controller
     {
         private readonly IUserHelper userHelper;
         private readonly IConfiguration configuration;
 
-        public AccountController(IUserHelper userHelper, IConfiguration configuration)
+        public AccountController(
+                          IUserHelper userHelper, 
+                          IConfiguration configuration)
         {
             this.userHelper = userHelper;
             this.configuration = configuration;
@@ -169,7 +171,7 @@ namespace Shop.Web.Controllers
             if (this.ModelState.IsValid)
             {
              
-                var user = await this.userHelper.GetUserByNameAsync(this.User.Identity.Name);
+                var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 if (user != null)
                 {
                     var result = await this.userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
@@ -198,13 +200,12 @@ namespace Shop.Web.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                var user = await this.userHelper.GetUserByNameAsync(model.Username);
+                var user = await this.userHelper.GetUserByEmailAsync(model.Username);
                 if (user != null)
                 {
-                    var result = await this.userHelper.CheckPasswordSignInAsync(
+                    var result = await this.userHelper.ValidatePasswordAsync(
                         user,
-                        model.Password,
-                        false);
+                        model.Password);
                     if (result.Succeeded)
                     {
                         var claims = new[]

@@ -53,15 +53,9 @@
             return await this.userManager.UpdateAsync(user);
         }
 
-        public async Task<User> GetUserByNameAsync(string name)
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
         {
-            return await this.userManager.FindByNameAsync(name);
-
-        }
-
-        public async Task<SignInResult> CheckPasswordSignInAsync(User user, string password, bool v)
-        {
-            return await this.signInManager.CheckPasswordSignInAsync(user, password, v);
+            return await this.signInManager.CheckPasswordSignInAsync(user, password, false);
         }
     }
 
