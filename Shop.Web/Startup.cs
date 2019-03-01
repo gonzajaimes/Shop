@@ -77,6 +77,8 @@ namespace Shop.Web
             //Inject user validation
             services.AddScoped<IUserHelper, UserHelper>();
 
+            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIntest");
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
