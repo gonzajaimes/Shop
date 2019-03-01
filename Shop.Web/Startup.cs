@@ -64,11 +64,7 @@ namespace Shop.Web
              .AddEntityFrameworkStores<DataContext>()
              .AddDefaultTokenProviders();
 
-            //services.AddDbContext<DataContext>(cfg =>
-            //{
-            //    cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
-            //});
-
+            
             //Inyectar el SeedDb
             services.AddTransient<SeedDb>();
 
@@ -86,6 +82,7 @@ namespace Shop.Web
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                
             });
 
            
