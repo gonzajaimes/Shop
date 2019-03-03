@@ -77,7 +77,10 @@ namespace Shop.Web
             //Inject user validation
             services.AddScoped<IUserHelper, UserHelper>();
 
-            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIntest");
+            services.ConfigureApplicationCookie(options =>
+                           { options.LoginPath = "/Account/NotAuthorized";
+                             options.AccessDeniedPath = "/Account/NotAuthorized";
+                           });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
