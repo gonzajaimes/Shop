@@ -4,11 +4,15 @@
     using Entities;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using System.Linq;
+    //using Common.Models;
+    //using User = Entities.User;
+    //using Product = Entities.Product;
 
     public class DataContext : IdentityDbContext<User>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Country> Countries { get; set; }
+        //public DbSet<OrderDetailTemp> OrderDetailTemps { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
