@@ -74,6 +74,9 @@ namespace Shop.Web
             //Inject the Countries repository 
             services.AddScoped<ICountryRepository, CountryRepository>();
 
+            //Inject the Orders repository
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
             //Inject user validation
             services.AddScoped<IUserHelper, UserHelper>();
 

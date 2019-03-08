@@ -1,13 +1,13 @@
-﻿namespace Shop.Common.Models
+﻿namespace Shop.Web.Data.Entities
 {
-     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-    public class OrderDetailTemp
+
+    public class OrderDetail : IEntity
     {
         public int Id { get; set; }
 
-        public User User { get; set; }
-
+        [Required]
         public Product Product { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
