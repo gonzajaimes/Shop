@@ -19,16 +19,13 @@
                     </th>
                 }
                 <th>
-                    @Html.DisplayNameFor(model => model.OrderDate)
+                    @Html.DisplayNameFor(model => model.OrderDateLocal)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryDate)
                 </th>
                 <th>
-                <th>
                     @Html.DisplayNameFor(model => model.Lines)
-                </th>
-
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Quantity)
@@ -45,19 +42,15 @@
                 <tr>
                     @if (this.User.IsInRole("Admin"))
                     {
-                        <th>
+                        <td>
                             @Html.DisplayFor(modelItem => item.User.FullName)
-                        </th>
+                        </td>
                     }
                     <td>
-                        @Html.DisplayFor(modelItem => item.OrderDate)
+                        @Html.DisplayFor(modelItem => item.OrderDateLocal)
                     </td>
                     <td>
-                        @if (item.DeliveryDate != DateTime.MinValue)
-                        {
-                            @Html.DisplayFor(modelItem => item.DeliveryDate)
-                        }
-
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)                    
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Lines)
