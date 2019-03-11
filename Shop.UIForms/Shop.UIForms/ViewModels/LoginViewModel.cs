@@ -6,20 +6,49 @@ namespace Shop.UIForms.ViewModels
     using GalaSoft.MvvmLight.Command;
     using Xamarin.Forms;
     using Views;
+    using Common.Services;
+    using Shop.Common.Models;
 
-    public class LoginViewModel
+    public class LoginViewModel : BaseViewModel
     {
+        #region Services
+
+        private readonly ApiService apiService;
+
+        #endregion
+
+
+        #region Attributes
+        private bool isRunning;
+        private bool isEnabled; 
+        #endregion
+
         #region Properties
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public bool IsRunning
+        {
+            get => this.isRunning;
+            set => this.SetValue(ref this.isRunning, value);
+        }
+
+        public bool IsEnabled
+        {
+            get => this.isEnabled;
+            set => this.SetValue(ref this.isEnabled, value);
+        }
+
         #endregion
 
         #region Constructors
         public LoginViewModel()
         {
             //this.IsRemembered = true;
-            //this.IsEnabled = true;
+            
+            this.apiService = new ApiService();
+            this.IsEnabled = true;
 
             this.Email = "gonzajaimes@hotmail.com";
             this.Password = "123456";
@@ -45,17 +74,37 @@ namespace Shop.UIForms.ViewModels
                 return;
             }
 
-            if (!this.Email.Equals("gonzajaimes@hotmail.com") || !this.Password.Equals("123456"))
+            this.IsRunning = true;
+            this.IsEnabled = false;
+
+            var request = new TokenRequest
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Incorrect user or password", "Accept");
+                Password = this.Password,
+                Username = this.Email
+            };
+
+            var url = Application.Current.Resources["UrlAPI"].ToString();
+            var response = await this.apiService.GetTokenAsync(
+                url,
+                "/Account",
+                "/CreateToken",
+                request);
+
+            this.IsRunning = false;
+            this.IsEnabled = true;
+
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Email or password incorrect.", "Accept");
                 return;
             }
 
-            MainViewModel.GetInstance().Products = new ProductsViewModel();
+            var token = (TokenResponse)response.Result;
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = token;
+            mainViewModel.Products = new ProductsViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new ProductsPage());
-
-
-            
+                                               
         } 
         #endregion
     }
