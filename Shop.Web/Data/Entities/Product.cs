@@ -41,12 +41,13 @@ namespace Shop.Web.Data.Entities
             {
                 if (string.IsNullOrEmpty(this.ImageUrl))
                 {
-                    return null;
+                    return "noImage";
                 }
 
                 return $"https://shopchalo.azurewebsites.net{this.ImageUrl.Substring(1)}";
             }
         }
+
 
     }
 }

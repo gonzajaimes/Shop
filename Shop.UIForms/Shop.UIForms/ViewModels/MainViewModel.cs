@@ -2,10 +2,13 @@
 
 namespace Shop.UIForms.ViewModels
 {
-    using Common.Models;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Windows.Input;
+    using Common.Models;
+    using GalaSoft.MvvmLight.Command;
+    using Views;
 
     public class MainViewModel
     {
@@ -16,11 +19,17 @@ namespace Shop.UIForms.ViewModels
 
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
+        public AddProductViewModel AddProduct { get; set; }
+
         #endregion
 
         #region Properties
 
         public TokenResponse Token { get; set; }
+
+        public string UserEmail { get; set; }
+
+        public string UserPassword { get; set; }
 
         #endregion
 
@@ -32,6 +41,18 @@ namespace Shop.UIForms.ViewModels
             this.LoadMenus();
 
         }
+        #endregion
+
+        #region Commands
+        public ICommand AddProductCommand => new RelayCommand(this.GoAddProduct);
+
+        private async void GoAddProduct()
+        {
+            this.AddProduct = new AddProductViewModel();
+            await App.Navigator.PushAsync(new AddProductPage());
+        }
+
+
         #endregion
 
         #region Singleton

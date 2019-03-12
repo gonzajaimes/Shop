@@ -3,6 +3,7 @@ namespace Shop.UIForms.ViewModels
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using Common.Models;
     using Common.Services;
@@ -58,7 +59,7 @@ namespace Shop.UIForms.ViewModels
             }
 
             var products = (List<Product>)response.Result;
-            this.Products = new ObservableCollection<Product>(products);
+            this.Products = new ObservableCollection<Product>(products.OrderBy(p => p.Name));
             this.IsRefreshing = false;
         }
     }
