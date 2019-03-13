@@ -9,6 +9,8 @@
     {
         Task<IQueryable<Order>> GetOrdersAsync(string userName);
 
+        Task<Order> GetOrdersAsync(int id);
+
         Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName);
 
         Task AddItemToOrderAsync(AddItemViewModel model, string userName);
@@ -21,7 +23,7 @@
 
         Task DeliverOrder(DeliverViewModel model);
 
-        Task<Order> GetOrdersAsync(int id);
+        
 
     }
 
