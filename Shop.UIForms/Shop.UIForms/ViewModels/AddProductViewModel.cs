@@ -69,7 +69,12 @@
                 IsAvailabe = true,
                 Name = this.Name,
                 Price = price,
-                User = new User { UserName = MainViewModel.GetInstance().UserEmail }
+                User = new User
+                {
+                    UserName = MainViewModel.GetInstance().UserEmail,
+                    Email = MainViewModel.GetInstance().UserEmail,
+
+                }
             };
 
             var url = Application.Current.Resources["UrlAPI"].ToString();
@@ -77,7 +82,7 @@
                 url,
                 "/api",
                 "/Products",
-                product,
+                 product,
                 "bearer",
                 MainViewModel.GetInstance().Token.Token);
 
