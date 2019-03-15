@@ -88,7 +88,7 @@
                 $("#CityId").empty();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("GetCities")',
+                    url: '@Url.Action("GetCitiesAsync")',
                     dataType: 'json',
                     data: { countryId: $("#CountryId").val() },
                     success: function (cities) {
