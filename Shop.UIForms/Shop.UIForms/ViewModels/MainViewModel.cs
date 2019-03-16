@@ -21,6 +21,8 @@ namespace Shop.UIForms.ViewModels
 
         public AddProductViewModel AddProduct { get; set; }
 
+        public EditProductViewModel EditProduct { get; set; }
+
         #endregion
 
         #region Properties

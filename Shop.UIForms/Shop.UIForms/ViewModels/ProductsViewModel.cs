@@ -1,6 +1,7 @@
 ﻿
 namespace Shop.UIForms.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -12,11 +13,15 @@ namespace Shop.UIForms.ViewModels
 
     public class ProductsViewModel : BaseViewModel
     {
+        #region Attributes
         private readonly ApiService apiService;
-        private ObservableCollection<Product> products;
+        private ObservableCollection<ProductItemViewModel> products;
         private bool isRefreshing;
+        private List<Product> myProducts; 
+        #endregion
 
-        public ObservableCollection<Product> Products
+        #region Properties
+        public ObservableCollection<ProductItemViewModel> Products
         {
             get => this.products;
             set => this.SetValue(ref this.products, value);
@@ -28,14 +33,21 @@ namespace Shop.UIForms.ViewModels
             set => this.SetValue(ref this.isRefreshing, value);
         }
 
-        public ICommand RefreshCommand => new RelayCommand(this.LoadProducts);
+        #endregion
 
+        #region Commands
+        public ICommand RefreshCommand => new RelayCommand(this.LoadProducts); 
+        #endregion
+
+        #region Constructors
         public ProductsViewModel()
         {
             this.apiService = new ApiService();
             this.LoadProducts();
-        }
+        } 
+        #endregion
 
+        #region Methods
         private async void LoadProducts()
         {
             this.IsRefreshing = true;
@@ -47,7 +59,7 @@ namespace Shop.UIForms.ViewModels
                 "/Products",
                 "bearer",
                 MainViewModel.GetInstance().Token.Token);
-    
+
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(
@@ -58,10 +70,62 @@ namespace Shop.UIForms.ViewModels
                 return;
             }
 
-            var products = (List<Product>)response.Result;
-            this.Products = new ObservableCollection<Product>(products.OrderBy(p => p.Name));
+            this.myProducts = (List<Product>)response.Result;
+            this.RefresProductsList();
+
             this.IsRefreshing = false;
         }
+
+        private void RefresProductsList()
+        {
+            this.Products = new ObservableCollection<ProductItemViewModel>(myProducts.Select(p => new ProductItemViewModel
+            {
+                Id = p.Id,
+                ImageUrl = p.ImageUrl,
+                ImageFullPath = p.ImageFullPath,
+                IsAvailabe = p.IsAvailabe,
+                LastPurchase = p.LastPurchase,
+                LastSale = p.LastSale,
+                Name = p.Name,
+                Price = p.Price,
+                Stock = p.Stock,
+                User = p.User
+            })
+            .OrderBy(p => p.Name)
+            .ToList());
+
+        }
+
+        public void AddProductToList(Product product)
+        {
+            this.myProducts.Add(product);
+            this.RefresProductsList();
+        }
+
+        public void UpdateProductInList(Product product)
+        {
+            var previousProduct = this.myProducts.Where(p => p.Id == product.Id).FirstOrDefault();
+            if (previousProduct != null)
+            {
+                this.myProducts.Remove(previousProduct);
+            }
+
+            this.myProducts.Add(product);
+            this.RefresProductsList();
+        }
+
+        public void DeleteProductInList(int productId)
+        {
+            var previousProduct = this.myProducts.Where(p => p.Id == productId).FirstOrDefault();
+            if (previousProduct != null)
+            {
+                this.myProducts.Remove(previousProduct);
+            }
+
+            this.RefresProductsList();
+        } 
+        #endregion
+
     }
 
 
