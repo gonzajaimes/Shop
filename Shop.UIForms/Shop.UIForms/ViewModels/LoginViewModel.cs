@@ -8,6 +8,8 @@ namespace Shop.UIForms.ViewModels
     using Views;
     using Common.Services;
     using Shop.Common.Models;
+    using Shop.UIForms.Helpers;
+    using Newtonsoft.Json;
 
     public class LoginViewModel : BaseViewModel
     {
@@ -27,6 +29,8 @@ namespace Shop.UIForms.ViewModels
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public bool IsRemember { get; set; }
 
         public bool IsRunning
         {
@@ -49,9 +53,9 @@ namespace Shop.UIForms.ViewModels
             
             this.apiService = new ApiService();
             this.IsEnabled = true;
-
-            this.Email = "gonzajaimes@hotmail.com";
-            this.Password = "123456";
+            this.IsRemember = true;
+            //this.Email = "gonzajaimes@hotmail.com";
+            //this.Password = "123456";
         }
         #endregion
 
@@ -105,6 +109,12 @@ namespace Shop.UIForms.ViewModels
             mainViewModel.Products = new ProductsViewModel();
             mainViewModel.UserEmail = this.Email;
             mainViewModel.UserPassword = this.Password;
+
+            Settings.IsRemember = this.IsRemember;
+            Settings.UserEmail = this.Email;
+            Settings.UserPassword = this.Password;
+            Settings.Token = JsonConvert.SerializeObject(token);
+
 
             Application.Current.MainPage = new MasterPage();
 

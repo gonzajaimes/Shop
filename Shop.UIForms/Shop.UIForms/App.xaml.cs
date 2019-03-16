@@ -3,7 +3,10 @@
     using Views;
     using Xamarin.Forms;
     using ViewModels;
-
+    using Shop.UIForms.Helpers;
+    using Newtonsoft.Json;
+    using Shop.Common.Models;
+    using System;
 
     public partial class App : Application
     {
@@ -13,6 +16,22 @@
         public App()
         {
             InitializeComponent();
+
+            if (Settings.IsRemember)
+            {
+                var token = JsonConvert.DeserializeObject<TokenResponse>(Settings.Token);
+                if (token.Expiration > DateTime.Now)
+                {
+                    var mainViewModel = MainViewModel.GetInstance();
+                    mainViewModel.Token = token;
+                    mainViewModel.UserEmail = Settings.UserEmail;
+                    mainViewModel.UserPassword = Settings.UserPassword;
+                    mainViewModel.Products = new ProductsViewModel();
+                    this.MainPage = new MasterPage();
+                    return;
+                }
+            }
+
 
             MainViewModel.GetInstance().Login = new LoginViewModel();
             this.MainPage = new NavigationPage(new LoginPage());

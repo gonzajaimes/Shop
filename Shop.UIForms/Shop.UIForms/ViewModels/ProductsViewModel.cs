@@ -73,7 +73,6 @@ namespace Shop.UIForms.ViewModels
             this.myProducts = (List<Product>)response.Result;
             this.RefresProductsList();
 
-            this.IsRefreshing = false;
         }
 
         private void RefresProductsList()
@@ -93,13 +92,14 @@ namespace Shop.UIForms.ViewModels
             })
             .OrderBy(p => p.Name)
             .ToList());
-
+            this.IsRefreshing = false;
         }
 
         public void AddProductToList(Product product)
         {
             this.myProducts.Add(product);
             this.RefresProductsList();
+            
         }
 
         public void UpdateProductInList(Product product)
@@ -112,6 +112,7 @@ namespace Shop.UIForms.ViewModels
 
             this.myProducts.Add(product);
             this.RefresProductsList();
+            
         }
 
         public void DeleteProductInList(int productId)
@@ -123,6 +124,7 @@ namespace Shop.UIForms.ViewModels
             }
 
             this.RefresProductsList();
+          
         } 
         #endregion
 
