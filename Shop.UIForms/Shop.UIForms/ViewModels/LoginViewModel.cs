@@ -49,13 +49,11 @@ namespace Shop.UIForms.ViewModels
         #region Constructors
         public LoginViewModel()
         {
-            //this.IsRemembered = true;
-            
+                      
             this.apiService = new ApiService();
             this.IsEnabled = true;
             this.IsRemember = true;
-            //this.Email = "gonzajaimes@hotmail.com";
-            //this.Password = "123456";
+            
         }
         #endregion
 

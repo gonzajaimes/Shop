@@ -9,7 +9,7 @@
         public string Token { get; set; }
 
         [JsonProperty("expiration")]
-        public DateTimeOffset Expiration { get; set; }
+        public DateTime Expiration { get; set; }
     }
 
 }
