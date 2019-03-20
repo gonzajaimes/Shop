@@ -15,6 +15,7 @@ namespace Shop.Web.Controllers
     using Data.Entities;
     using Helpers;
     using Models;
+    using Microsoft.AspNetCore.Authorization;
 
     public class AccountController : Controller
     {
@@ -363,7 +364,69 @@ namespace Shop.Web.Controllers
             return View(model);
         }
 
+        [Authorize (Roles = "Admin")]
+        public async Task<IActionResult> Index()
+        {
+            var users = await this.userHelper.GetAllUsersAsync();
+            users.ForEach(async u => u.IsAdmin = await this.userHelper.IsUserInRoleAsync(u, "Admin"));
+            return this.View(users);
+        }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminOff(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var user = await this.userHelper.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await this.userHelper.RemoveUserFromRoleAsync(user, "Admin");
+            return this.RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminOn(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var user = await this.userHelper.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await this.userHelper.AddUserToRoleAsync(user, "Admin");
+            return this.RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var user = await this.userHelper.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await this.userHelper.DeleteUserAsync(user);
+            return this.RedirectToAction(nameof(Index));
+        }
+
+               
 
         public IActionResult NotAuthorized()
         {
