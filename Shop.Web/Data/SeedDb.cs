@@ -31,8 +31,9 @@ namespace Shop.Web.Data
 
             if (!this.context.Countries.Any())
             {
-                await this.CountriesAndCities();
+                await this.AddCountriesAndCitiesAsync();
             }
+
 
             await this.CheckUser("brad@gmail.com", "Brad", "Pit", "Customer");
             await this.CheckUser("angelina@gmail.com", "Angelina", "Jolie", "Customer");
@@ -42,13 +43,21 @@ namespace Shop.Web.Data
             if (!this.context.Products.Any())
             {
                 this.AddProduct("AirPods", 159, user);
+                this.AddProduct("Blackmagic eGPU Pro", 1199, user);
                 this.AddProduct("iPad Pro", 799, user);
+                this.AddProduct("iMac", 1398, user);
                 this.AddProduct("iPhone X", 749, user);
                 this.AddProduct("iWatch Series 4", 399, user);
+                this.AddProduct("Mac Book Air", 789, user);
                 this.AddProduct("Mac Book Pro", 1299, user);
+                this.AddProduct("Mac Mini", 708, user);
+                this.AddProduct("Mac Pro", 2300, user);
                 this.AddProduct("Magic Mouse", 47, user);
+                this.AddProduct("Magic Trackpad 2", 140, user);
+                this.AddProduct("USB C Multiport", 145, user);
                 this.AddProduct("Wireless Charging Pad", 67.67M, user);
                 await this.context.SaveChangesAsync();
+
             }
         }
 
@@ -96,44 +105,34 @@ namespace Shop.Web.Data
             return user;
         }
 
-        private async Task CountriesAndCities()
+        private async Task AddCountriesAndCitiesAsync()
         {
-            var citiesCol = new List<City>();
-            citiesCol.Add(new City { Name = "Medellín" });
-            citiesCol.Add(new City { Name = "Bogotá" });
-            citiesCol.Add(new City { Name = "Calí" });
-            citiesCol.Add(new City { Name = "Bucaramanga" });
-
-            this.context.Countries.Add(new Country
-            {
-                Cities = citiesCol,
-                Name = "Colombia"
-            });
-
-            var citiesArg = new List<City>();
-            citiesArg.Add(new City { Name = "Córdoba" });
-            citiesArg.Add(new City { Name = "Buenos Aires" });
-            citiesArg.Add(new City { Name = "Rosario" });
-
-            this.context.Countries.Add(new Country
-            {
-                Cities = citiesArg,
-                Name = "Argentina"
-            });
-
-            var citiesUsa = new List<City>();
-            citiesUsa.Add(new City { Name = "New York" });
-            citiesUsa.Add(new City { Name = "Los Ángeles" });
-            citiesUsa.Add(new City { Name = "Chicago" });
-
-            this.context.Countries.Add(new Country
-            {
-                Cities = citiesUsa,
-                Name = "Estados Unidos"
-            });
-
+            this.AddCountry("Colombia", new string[] { "Medellín", "Bogota", "Calí", "Barranquilla", "Bucaramanga", "Cartagena", "Pereira" });
+            this.AddCountry("Argentina", new string[] { "Córdoba", "Buenos Aires", "Rosario", "Tandil", "Salta", "Mendoza" });
+            this.AddCountry("Estados Unidos", new string[] { "New York", "Los Ángeles", "Chicago", "Washington", "San Francisco", "Miami", "Boston" });
+            this.AddCountry("Ecuador", new string[] { "Quito", "Guayaquil", "Ambato", "Manta", "Loja", "Santo" });
+            this.AddCountry("Peru", new string[] { "Lima", "Arequipa", "Cusco", "Trujillo", "Chiclayo", "Iquitos" });
+            this.AddCountry("Chile", new string[] { "Santiago", "Valdivia", "Concepcion", "Puerto Montt", "Temucos", "La Sirena" });
+            this.AddCountry("Uruguay", new string[] { "Montevideo", "Punta del Este", "Colonia del Sacramento", "Las Piedras" });
+            this.AddCountry("Bolivia", new string[] { "La Paz", "Sucre", "Potosi", "Cochabamba" });
+            this.AddCountry("Venezuela", new string[] { "Caracas", "Valencia", "Maracaibo", "Ciudad Bolivar", "Maracay", "Barquisimeto" });
+            this.AddCountry("Paraguay", new string[] { "Asunción", "Ciudad del Este", "Encarnación", "San  Lorenzo", "Luque", "Areguá" });
+            this.AddCountry("Brasil", new string[] { "Rio de Janeiro", "São Paulo", "Salvador", "Porto Alegre", "Curitiba", "Recife", "Belo Horizonte", "Fortaleza" });
+            this.AddCountry("Panamá", new string[] { "Chitré", "Santiago", "La Arena", "Agua Dulce", "Monagrillo", "Ciudad de Panamá", "Colón", "Los Santos" });
+            this.AddCountry("México", new string[] { "Guadalajara", "Ciudad de México", "Monterrey", "Ciudad Obregón", "Hermosillo", "La Paz", "Culiacán", "Los Mochis" });
             await this.context.SaveChangesAsync();
         }
+
+        private void AddCountry(string country, string[] cities)
+        {
+            var theCities = cities.Select(c => new City { Name = c }).ToList();
+            this.context.Countries.Add(new Country
+            {
+                Cities = theCities,
+                Name = country
+            });
+        }
+
 
         private async Task CheckRoles()
         {

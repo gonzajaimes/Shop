@@ -69,13 +69,13 @@ namespace Shop.UIForms.ViewModels
                 this.IsRefreshing = false;
                 return;
             }
-
+            this.IsRefreshing = false;
             this.myProducts = (List<Product>)response.Result;
-            this.RefresProductsList();
+            this.RefreshProductsList();
 
         }
 
-        private void RefresProductsList()
+        private void RefreshProductsList()
         {
             this.Products = new ObservableCollection<ProductItemViewModel>(myProducts.Select(p => new ProductItemViewModel
             {
@@ -98,7 +98,7 @@ namespace Shop.UIForms.ViewModels
         public void AddProductToList(Product product)
         {
             this.myProducts.Add(product);
-            this.RefresProductsList();
+            this.RefreshProductsList();
             
         }
 
@@ -111,7 +111,7 @@ namespace Shop.UIForms.ViewModels
             }
 
             this.myProducts.Add(product);
-            this.RefresProductsList();
+            this.RefreshProductsList();
             
         }
 
@@ -123,7 +123,7 @@ namespace Shop.UIForms.ViewModels
                 this.myProducts.Remove(previousProduct);
             }
 
-            this.RefresProductsList();
+            this.RefreshProductsList();
           
         } 
         #endregion
