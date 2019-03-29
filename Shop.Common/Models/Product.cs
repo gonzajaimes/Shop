@@ -34,6 +34,8 @@
 
         [JsonProperty("imageFullPath")]
         public string ImageFullPath { get; set; }
+
+        public byte[] ImageArray { get; set; }
     }
 
 }
