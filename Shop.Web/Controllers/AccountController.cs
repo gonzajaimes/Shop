@@ -368,7 +368,15 @@ namespace Shop.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var users = await this.userHelper.GetAllUsersAsync();
-            users.ForEach(async u => u.IsAdmin = await this.userHelper.IsUserInRoleAsync(u, "Admin"));
+            //users.ForEach(async u => u.IsAdmin = await this.userHelper.IsUserInRoleAsync(u, "Admin"));
+            foreach (var user in users)
+            {
+                var myUser = await this.userHelper.GetUserByIdAsync(user.Id);
+                if (myUser != null)
+                {
+                    user.IsAdmin = await this.userHelper.IsUserInRoleAsync(myUser, "Admin");
+                }
+            }
             return this.View(users);
         }
 
