@@ -59,6 +59,8 @@ namespace Shop.UIForms.ViewModels
 
         #region Commands
         public ICommand LoginCommand => new RelayCommand(this.Login);
+
+        public ICommand RegisterCommand => new RelayCommand(this.Register);
         #endregion
 
         #region Methods
@@ -116,7 +118,14 @@ namespace Shop.UIForms.ViewModels
 
             Application.Current.MainPage = new MasterPage();
 
-        } 
+        }
+
+        private async void Register()
+        {
+            MainViewModel.GetInstance().Register = new RegisterViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
         #endregion
     }
 
