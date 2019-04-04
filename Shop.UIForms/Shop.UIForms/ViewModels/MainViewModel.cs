@@ -10,7 +10,7 @@ namespace Shop.UIForms.ViewModels
     using GalaSoft.MvvmLight.Command;
     using Views;
 
-    public class MainViewModel
+    public class MainViewModel :BaseViewModel
     {
         #region ViewModels
         public LoginViewModel Login { get; set; }
@@ -31,6 +31,8 @@ namespace Shop.UIForms.ViewModels
 
         #endregion
 
+        private User user;
+
         #region Properties
 
         public TokenResponse Token { get; set; }
@@ -39,7 +41,12 @@ namespace Shop.UIForms.ViewModels
 
         public string UserPassword { get; set; }
 
-        public User User { get; set; }
+        public User User
+        {
+            get => this.user;
+            set => this.SetValue(ref this.user, value);
+        }
+
 
         #endregion
 

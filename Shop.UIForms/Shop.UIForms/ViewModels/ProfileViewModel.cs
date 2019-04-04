@@ -3,12 +3,17 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Windows.Input;
     using Common.Models;
     using Common.Services;
+    using GalaSoft.MvvmLight.Command;
+    using Newtonsoft.Json;
+    using Shop.UIForms.Helpers;
     using Xamarin.Forms;
 
     public class ProfileViewModel : BaseViewModel
     {
+        #region Attributes
         private readonly ApiService apiService;
         private bool isRunning;
         private bool isEnabled;
@@ -18,7 +23,9 @@
         private City city;
         private User user;
         private List<Country> myCountries;
+        #endregion
 
+        #region Properties
         public Country Country
         {
             get => this.country;
@@ -64,7 +71,9 @@
             get => this.isEnabled;
             set => this.SetValue(ref this.isEnabled, value);
         }
+        #endregion
 
+        #region Constructors
         public ProfileViewModel()
         {
             this.apiService = new ApiService();
@@ -72,6 +81,17 @@
             this.IsEnabled = true;
             this.LoadCountries();
         }
+        #endregion
+
+        #region Commands
+
+        public ICommand SaveCommand => new RelayCommand(this.Save);
+
+        #endregion
+
+
+
+        #region Methods
 
         private async void LoadCountries()
         {
@@ -101,6 +121,97 @@
             this.SetCountryAndCity();
         }
 
+        private async void Save()
+        {
+            if (string.IsNullOrEmpty(this.User.FirstName))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "You must enter the first name.",
+                    "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.User.LastName))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "You must enter the last name.",
+                    "Accept");
+                return;
+            }
+
+            if (this.Country == null)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "You must select a country.",
+                    "Accept");
+                return;
+            }
+
+            if (this.City == null)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "You must select a city.",
+                    "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.User.Address))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "You must enter an address.",
+                    "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.User.PhoneNumber))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "You must enter a phone number.",
+                    "Accept");
+                return;
+            }
+
+            this.IsRunning = true;
+            this.IsEnabled = false;
+
+            var url = Application.Current.Resources["UrlAPI"].ToString();
+            var response = await this.apiService.PutAsync(
+                url,
+                "/api",
+                "/Account",
+                this.User,
+                "bearer",
+                MainViewModel.GetInstance().Token.Token);
+
+            this.IsRunning = false;
+            this.IsEnabled = true;
+
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    response.Message,
+                    "Accept");
+                return;
+            }
+
+            MainViewModel.GetInstance().User = this.User;
+            Settings.User = JsonConvert.SerializeObject(this.User);
+
+            await Application.Current.MainPage.DisplayAlert(
+                "Ok",
+                "User updated!",
+                "Accept");
+            await App.Navigator.PopAsync();
+        }
+
+
         private void SetCountryAndCity()
         {
             foreach (var country in this.myCountries)
@@ -113,7 +224,8 @@
                     return;
                 }
             }
-        }
+        } 
+        #endregion
     }
 
 }
