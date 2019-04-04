@@ -61,6 +61,8 @@ namespace Shop.UIForms.ViewModels
         public ICommand LoginCommand => new RelayCommand(this.Login);
 
         public ICommand RegisterCommand => new RelayCommand(this.Register);
+
+        public ICommand RememberPasswordCommand => new RelayCommand(this.RememberPassword);
         #endregion
 
         #region Methods
@@ -124,6 +126,12 @@ namespace Shop.UIForms.ViewModels
         {
             MainViewModel.GetInstance().Register = new RegisterViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
+        private async void RememberPassword()
+        {
+            MainViewModel.GetInstance().RememberPassword = new RememberPasswordViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new RememberPasswordPage());
         }
 
         #endregion

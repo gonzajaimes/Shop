@@ -29,6 +29,15 @@
                 	Placeholder="Enter your password..."
                 	Text="{Binding Password}">
                 </Entry>
+                <Label	
+	                HorizontalOptions="Center"
+	                Text="Forgot my password"
+	                TextColor="Navy">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RememberPasswordCommand }"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
                 <StackLayout
 	                HorizontalOptions="Center"
 	                Orientation="Horizontal">
