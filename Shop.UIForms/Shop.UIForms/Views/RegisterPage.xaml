@@ -95,7 +95,7 @@
                     <Label
                     	Grid.Column="0"
                     	Grid.Row="6"
-                    	Text="Pohone"
+                    	Text="Phone"
                     	VerticalOptions="Center">
                     </Label>
                     <Entry
