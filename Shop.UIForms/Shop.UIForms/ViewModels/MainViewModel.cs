@@ -23,6 +23,8 @@ namespace Shop.UIForms.ViewModels
 
         public EditProductViewModel EditProduct { get; set; }
 
+        public ProfileViewModel Profile { get; set; }
+
         public RegisterViewModel Register { get; set; }
 
         public RememberPasswordViewModel RememberPassword { get; set; }
@@ -36,6 +38,8 @@ namespace Shop.UIForms.ViewModels
         public string UserEmail { get; set; }
 
         public string UserPassword { get; set; }
+
+        public User User { get; set; }
 
         #endregion
 
@@ -86,6 +90,13 @@ namespace Shop.UIForms.ViewModels
             Icon = "ic_info",
             PageName = "AboutPage",
             Title = "About"
+        },
+
+        new Menu
+        {
+            Icon = "ic_person",
+            PageName = "ProfilePage",
+            Title = "My Profile"
         },
 
         new Menu

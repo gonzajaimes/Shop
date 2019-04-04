@@ -324,10 +324,10 @@
         }
 
         public async Task<Response> RegisterUserAsync(
-    string urlBase,
-    string servicePrefix,
-    string controller,
-    NewUserRequest newUserRequest)
+                                    string urlBase,
+                                    string servicePrefix,
+                                    string controller,
+                                    NewUserRequest newUserRequest)
         {
             try
             {
@@ -384,6 +384,54 @@
                 };
             }
         }
+
+        public async Task<Response> GetUserByEmailAsync(
+                                    string urlBase,
+                                    string servicePrefix,
+                                    string controller,
+                                    string email,
+                                    string tokenType,
+                                    string accessToken)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(new RecoverPasswordRequest { Email = email });
+                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri(urlBase)
+                };
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+                var url = $"{servicePrefix}{controller}";
+                var response = await client.PostAsync(url, content);
+                var answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = answer,
+                    };
+                }
+
+                var user = JsonConvert.DeserializeObject<User>(answer);
+                return new Response
+                {
+                    IsSuccess = true,
+                    Result = user,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
 
 
 

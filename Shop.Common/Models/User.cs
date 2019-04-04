@@ -11,6 +11,15 @@
         [JsonProperty("lastName")]
         public string LastName { get; set; }
 
+        [JsonProperty("address")]
+        public string Address { get; set; }
+
+        [JsonProperty("cityId")]
+        public int CityId { get; set; }
+
+        [JsonProperty("city")]
+        public City City { get; set; }
+
         [JsonProperty("id")]
         public Guid Id { get; set; }
 
@@ -55,6 +64,9 @@
 
         [JsonProperty("accessFailedCount")]
         public long AccessFailedCount { get; set; }
+
+        public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
+
     }
 
 }

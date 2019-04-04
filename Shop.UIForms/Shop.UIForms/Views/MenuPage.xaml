@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
          	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
          	x:Class="Shop.UIForms.Views.MenuPage"
-         	BackgroundColor="Gainsboro"
+         	BackgroundColor="Navy"
          	BindingContext="{Binding Main, Source={StaticResource Locator}}"
          	Title="Menu">
     <ContentPage.Content>
@@ -12,10 +12,17 @@
             	HeightRequest="150"
             	Source="onlinestoreicon.png">
             </Image>
+            <Label
+                FontSize="Large"
+                Text="{Binding User.FullName, StringFormat='Welcome: {0}'}"
+                TextColor="White">
+            </Label>
+
             <ListView
             	ItemsSource="{Binding Menus}"
             	HasUnevenRows="True"
-            	SeparatorVisibility="None">
+            	SeparatorVisibility="None"
+                BackgroundColor="Navy">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
