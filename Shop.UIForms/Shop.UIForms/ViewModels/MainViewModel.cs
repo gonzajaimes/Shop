@@ -29,6 +29,8 @@ namespace Shop.UIForms.ViewModels
 
         public RememberPasswordViewModel RememberPassword { get; set; }
 
+        public ChangePasswordViewModel ChangePassword { get; set; }
+
         #endregion
 
         private User user;

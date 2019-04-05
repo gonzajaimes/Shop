@@ -9,6 +9,7 @@
     using GalaSoft.MvvmLight.Command;
     using Newtonsoft.Json;
     using Common.Helpers;
+    using Views;
     using Xamarin.Forms;
 
     public class ProfileViewModel : BaseViewModel
@@ -87,6 +88,8 @@
 
         public ICommand SaveCommand => new RelayCommand(this.Save);
 
+        public ICommand ModifyPasswordCommand => new RelayCommand(this.ModifyPassword);
+
         #endregion
 
 
@@ -119,6 +122,12 @@
             this.myCountries = (List<Country>)response.Result;
             this.Countries = new ObservableCollection<Country>(myCountries);
             this.SetCountryAndCity();
+        }
+
+        private async void ModifyPassword()
+        {
+            MainViewModel.GetInstance().ChangePassword = new ChangePasswordViewModel();
+            await App.Navigator.PushAsync(new ChangePasswordPage());
         }
 
         private async void Save()
