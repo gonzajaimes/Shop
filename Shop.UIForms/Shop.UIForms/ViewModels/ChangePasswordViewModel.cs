@@ -4,7 +4,7 @@
     using Common.Models;
     using Common.Services;
     using GalaSoft.MvvmLight.Command;
-    using Helpers;
+    using Common.Helpers;
     using Xamarin.Forms;
 
     public class ChangePasswordViewModel : BaseViewModel
