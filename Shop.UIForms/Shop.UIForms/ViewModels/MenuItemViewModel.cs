@@ -2,7 +2,7 @@
 {
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
-    using Shop.UIForms.Helpers;
+    using Common.Helpers;
     using Views;
     using Xamarin.Forms;
 

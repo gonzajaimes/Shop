@@ -7,8 +7,8 @@ namespace Shop.UIForms.ViewModels
     using Xamarin.Forms;
     using Views;
     using Common.Services;
-    using Shop.Common.Models;
-    using Shop.UIForms.Helpers;
+    using Common.Models;
+    using Common.Helpers;
     using Newtonsoft.Json;
 
     public class LoginViewModel : BaseViewModel

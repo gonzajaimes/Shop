@@ -3,9 +3,9 @@
     using Views;
     using Xamarin.Forms;
     using ViewModels;
-    using Shop.UIForms.Helpers;
+    using Common.Helpers;
     using Newtonsoft.Json;
-    using Shop.Common.Models;
+    using Common.Models;
     using System;
 
     public partial class App : Application

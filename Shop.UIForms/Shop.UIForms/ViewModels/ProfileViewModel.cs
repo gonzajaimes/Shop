@@ -8,7 +8,7 @@
     using Common.Services;
     using GalaSoft.MvvmLight.Command;
     using Newtonsoft.Json;
-    using Shop.UIForms.Helpers;
+    using Common.Helpers;
     using Xamarin.Forms;
 
     public class ProfileViewModel : BaseViewModel

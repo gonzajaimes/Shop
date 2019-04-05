@@ -1,5 +1,4 @@
-﻿
-namespace Shop.UIForms.Helpers
+﻿namespace Shop.Common.Helpers
 {
     using Plugin.Settings;
     using Plugin.Settings.Abstractions;
@@ -48,5 +47,4 @@ namespace Shop.UIForms.Helpers
         }
 
     }
-
 }

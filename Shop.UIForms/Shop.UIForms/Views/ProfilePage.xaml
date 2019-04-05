@@ -41,25 +41,12 @@
                     <Label
                         Grid.Column="0"
                         Grid.Row="2"
-                        Text="Email"
-                        VerticalOptions="Center">
-                    </Label>
-                    <Entry
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        Keyboard="Email"
-                        Placeholder="Enter your email..."
-                        Text="{Binding User.Email}">
-                    </Entry>
-                    <Label
-                        Grid.Column="0"
-                        Grid.Row="3"
                         Text="Country"
                         VerticalOptions="Center">
                     </Label>
                     <Picker
                         Grid.Column="1"
-                        Grid.Row="3"
+                        Grid.Row="2"
                         ItemDisplayBinding="{Binding Name}"
                         ItemsSource="{Binding Countries}"
                         SelectedItem="{Binding Country}"
@@ -67,13 +54,13 @@
                     </Picker>
                     <Label
                         Grid.Column="0"
-                        Grid.Row="4"
+                        Grid.Row="3"
                         Text="City"
                         VerticalOptions="Center">
                     </Label>
                     <Picker
                         Grid.Column="1"
-                        Grid.Row="4"
+                        Grid.Row="3"
                         ItemDisplayBinding="{Binding Name}"
                         ItemsSource="{Binding Cities}"
                         SelectedItem="{Binding City}"
@@ -81,26 +68,26 @@
                     </Picker>
                     <Label
                         Grid.Column="0"
-                        Grid.Row="5"
+                        Grid.Row="4"
                         Text="Address"
                         VerticalOptions="Center">
                     </Label>
                     <Entry
                         Grid.Column="1"
-                        Grid.Row="5"
+                        Grid.Row="4"
                         Keyboard="Email"
                         Placeholder="Enter your address..."
                         Text="{Binding User.Address}">
                     </Entry>
                     <Label
                         Grid.Column="0"
-                        Grid.Row="6"
+                        Grid.Row="5"
                         Text="Phone"
                         VerticalOptions="Center">
                     </Label>
                     <Entry
                         Grid.Column="1"
-                        Grid.Row="6"
+                        Grid.Row="5"
                         Keyboard="Telephone"
                         Placeholder="Enter your phone number..."
                         Text="{Binding User.PhoneNumber}">
